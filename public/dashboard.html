@@ -3,177 +3,743 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <title>Dashboard - Sistema de Inventario</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 25px;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            margin: 0 auto 15px;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .logo-section h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .logo-section p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .menu {
+            flex: 1;
+        }
+
+        .menu-section {
+            margin-bottom: 30px;
+        }
+
+        .menu-section h3 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .menu-item .icon {
+            font-size: 20px;
+        }
+
+        .user-section {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: auto;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-info h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .user-info p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        /* HEADER */
+        .header {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 28px;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .header-left p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 12px;
+        }
+
+        .header-btn {
+            padding: 10px 18px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .header-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .header-btn.primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+        }
+
+        .header-btn.primary:hover {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* CONTENT SECTION */
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .stat-card .value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .change {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        /* QUICK ACTIONS */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            padding: 20px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .action-btn .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .action-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        /* FORM STYLES */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        /* PRODUCTOS */
+        .producto-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .producto-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .producto-info h3 {
+            font-size: 18px;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .producto-details {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .producto-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .producto-badge.activo {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .producto-badge.inactivo {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .producto-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .btn-edit:hover {
+            background: #3b82f6;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .btn-delete {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .btn-delete:hover {
+            background: #ef4444;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+
+        .empty-state .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+        }
+
+        /* TOOLBAR */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 45px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">
-                <h2>🚀 Sistema Pro</h2>
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="logo-section">
+                <div class="logo-icon">📦</div>
+                <h2>InventPro</h2>
+                <p>Sistema de Gestión</p>
             </div>
-            
-            <div class="user-info">
-                <div class="user-avatar">
-                    <span id="userInitial">U</span>
-                </div>
-                <p class="username" id="username">Usuario</p>
-            </div>
-            
-            <nav class="menu">
-                <button class="menu-item active" id="btnDashboard">
-                    <span class="icon">📊</span>
-                    Dashboard
-                </button>
-                <button class="menu-item" id="btnAgregarProductos">
-                    <span class="icon">➕</span>
-                    Agregar Productos
-                </button>
-                <button class="menu-item" id="btnVerProductos">
-                    <span class="icon">📦</span>
-                    Productos
-                </button>
-                <button class="menu-item">
-                    <span class="icon">👥</span>
-                    Usuarios
-                </button>
-                <button class="menu-item">
-                    <span class="icon">⚙️</span>
-                    Configuración
-                </button>
-            </nav>
-            
-            <button class="logout-btn" id="btnLogout">
-                <span class="icon">🚪</span>
-                Cerrar Sesión
-            </button>
-        </aside>
-        
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="top-bar">
-                <h1 id="pageTitle">Bienvenido al Dashboard</h1>
-                <div class="top-bar-right">
-                    <span class="date" id="currentDate"></span>
-                </div>
-            </header>
-            
-            <!-- Vista Dashboard -->
-            <div class="content" id="dashboardView">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon blue">📦</div>
-                        <div class="stat-info">
-                            <h3>Total Productos</h3>
-                            <p class="stat-number" id="totalProductos">0</p>
-                        </div>
+
+            <div class="menu">
+                <div class="menu-section">
+                    <h3>Principal</h3>
+                    <div class="menu-item active" id="btnDashboard">
+                        <span class="icon">📊</span>
+                        <span>Dashboard</span>
                     </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon green">✅</div>
-                        <div class="stat-info">
-                            <h3>Activos</h3>
-                            <p class="stat-number" id="productosActivos">0</p>
-                        </div>
+                    <div class="menu-item" id="btnAgregarProductos">
+                        <span class="icon">➕</span>
+                        <span>Agregar Productos</span>
                     </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon orange">⏳</div>
-                        <div class="stat-info">
-                            <h3>Inactivos</h3>
-                            <p class="stat-number" id="productosInactivos">0</p>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon purple">📊</div>
-                        <div class="stat-info">
-                            <h3>Cantidad Total</h3>
-                            <p class="stat-number" id="cantidadTotal">0</p>
-                        </div>
+                    <div class="menu-item" id="btnVerProductos">
+                        <span class="icon">📋</span>
+                        <span>Mis Productos</span>
                     </div>
                 </div>
-                
-                <div class="welcome-message">
-                    <h2>¡Hola, <span id="welcomeUser"></span>!</h2>
-                    <p>Este es tu panel de control. Aquí podrás gestionar tus productos y mucho más.</p>
+
+                <div class="menu-section">
+                    <h3>Extras (Decorativo)</h3>
+                    <div class="menu-item" onclick="alert('Función decorativa')">
+                        <span class="icon">📈</span>
+                        <span>Reportes</span>
+                    </div>
+                    <div class="menu-item" onclick="alert('Función decorativa')">
+                        <span class="icon">⚙️</span>
+                        <span>Configuración</span>
+                    </div>
+                    <div class="menu-item" onclick="alert('Función decorativa')">
+                        <span class="icon">🔔</span>
+                        <span>Notificaciones</span>
+                    </div>
+                </div>
+
+                <div class="menu-section">
+                    <h3>Cuenta</h3>
+                    <div class="menu-item" id="btnLogout">
+                        <span class="icon">🚪</span>
+                        <span>Cerrar Sesión</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Vista Agregar Producto -->
-            <div class="content" id="agregarProductoView" style="display: none;">
-                <div class="form-container">
-                    <h2>Agregar Nuevo Producto</h2>
+            <div class="user-section">
+                <div class="user-avatar" id="userInitial">U</div>
+                <div class="user-info">
+                    <h4 id="username">Usuario</h4>
+                    <p id="currentDate">Fecha</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- HEADER -->
+            <div class="header">
+                <div class="header-left">
+                    <h1 id="pageTitle">Bienvenido al Dashboard</h1>
+                    <p>Hola <strong id="welcomeUser">Usuario</strong>, aquí puedes gestionar tus productos</p>
+                </div>
+                <div class="header-right">
+                    <button class="header-btn" onclick="alert('Función decorativa')">
+                        <span>🔔</span>
+                        <span>3</span>
+                    </button>
+                    <button class="header-btn" onclick="alert('Función decorativa')">
+                        <span>⚙️</span>
+                    </button>
+                    <button class="header-btn primary" onclick="alert('Función decorativa')">
+                        <span>💬</span>
+                        <span>Soporte</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- DASHBOARD VIEW -->
+            <div id="dashboardView">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Productos</h3>
+                        <div class="value" id="totalProductos">0</div>
+                        <div class="change">📦 Productos registrados</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>Productos Activos</h3>
+                        <div class="value" id="productosActivos">0</div>
+                        <div class="change">✅ En inventario</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>Productos Inactivos</h3>
+                        <div class="value" id="productosInactivos">0</div>
+                        <div class="change">⏸️ Desactivados</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>Cantidad Total</h3>
+                        <div class="value" id="cantidadTotal">0</div>
+                        <div class="change">📊 Unidades totales</div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="content-section">
+                    <h2 style="margin-bottom: 20px; color: #1e293b;">Acciones Rápidas</h2>
+                    <div class="quick-actions">
+                        <div class="action-btn" onclick="document.getElementById('btnAgregarProductos').click()">
+                            <span class="icon">➕</span>
+                            Agregar Producto
+                        </div>
+                        <div class="action-btn" onclick="document.getElementById('btnVerProductos').click()">
+                            <span class="icon">📋</span>
+                            Ver Productos
+                        </div>
+                        <div class="action-btn" onclick="alert('Función decorativa')">
+                            <span class="icon">📊</span>
+                            Generar Reporte
+                        </div>
+                        <div class="action-btn" onclick="alert('Función decorativa')">
+                            <span class="icon">📥</span>
+                            Importar Datos
+                        </div>
+                        <div class="action-btn" onclick="alert('Función decorativa')">
+                            <span class="icon">📤</span>
+                            Exportar Excel
+                        </div>
+                        <div class="action-btn" onclick="alert('Función decorativa')">
+                            <span class="icon">🔍</span>
+                            Buscar Avanzado
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AGREGAR PRODUCTO VIEW -->
+            <div id="agregarProductoView" style="display: none;">
+                <div class="content-section">
+                    <h2 style="margin-bottom: 20px; color: #1e293b;">Nuevo Producto</h2>
                     <form id="formAgregarProducto">
                         <div class="form-group">
                             <label for="nombreProducto">Nombre del Producto</label>
-                            <input 
-                                type="text" 
-                                id="nombreProducto" 
-                                name="nombreProducto" 
-                                placeholder="Ej: Laptop Dell"
-                                required
-                            >
+                            <input type="text" id="nombreProducto" name="nombreProducto" placeholder="Ej: Laptop Dell XPS 15" required>
                         </div>
-
                         <div class="form-group">
                             <label for="cantidadProducto">Cantidad</label>
-                            <input 
-                                type="number" 
-                                id="cantidadProducto" 
-                                name="cantidadProducto" 
-                                min="0"
-                                placeholder="Ej: 10"
-                                required
-                            >
+                            <input type="number" id="cantidadProducto" name="cantidadProducto" min="0" placeholder="0" required>
                         </div>
-
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label">
-                                <input 
-                                    type="checkbox" 
-                                    id="activoProducto" 
-                                    name="activoProducto"
-                                    checked
-                                >
-                                <span>Producto Activo</span>
-                            </label>
-                            <small>Desmarca si el producto no está disponible</small>
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="activoProducto" name="activoProducto" checked>
+                                <label for="activoProducto">Producto Activo</label>
+                            </div>
                         </div>
-
                         <div class="form-actions">
-                            <button type="submit" class="btn-primary">
-                                <span class="icon">💾</span>
-                                Guardar Producto
+                            <button type="submit" class="btn btn-primary">
+                                <span class="icon">💾</span> Guardar Producto
                             </button>
-                            <button type="button" class="btn-secondary" id="btnCancelar">
-                                <span class="icon">❌</span>
-                                Cancelar
+                            <button type="button" class="btn btn-secondary" id="btnCancelar">
+                                <span class="icon">❌</span> Cancelar
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Vista Ver Productos -->
-            <div class="content" id="verProductosView" style="display: none;">
-                <div class="productos-container">
-                    <div class="productos-header">
-                        <h2>Mis Productos</h2>
-                        <button class="btn-refresh" id="btnRefrescar">
-                            <span class="icon">🔄</span>
-                            Actualizar
-                        </button>
+            <!-- VER PRODUCTOS VIEW -->
+            <div id="verProductosView" style="display: none;">
+                <div class="content-section">
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <input type="text" placeholder="Buscar productos..." onkeyup="alert('Función decorativa')">
+                        </div>
+                        <div class="toolbar-actions">
+                            <button class="header-btn" id="btnRefrescar">
+                                <span>🔄</span>
+                                Refrescar
+                            </button>
+                            <button class="header-btn" onclick="alert('Función decorativa')">
+                                <span>📊</span>
+                                Filtrar
+                            </button>
+                            <button class="header-btn primary" onclick="alert('Función decorativa')">
+                                <span>📥</span>
+                                Exportar
+                            </button>
+                        </div>
                     </div>
-                    <div id="listaProductos" class="productos-lista">
-                        <!-- Los productos se cargarán aquí dinámicamente -->
+                    <div id="listaProductos">
+                        <p style="text-align: center; padding: 20px;">Cargando productos...</p>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
-    
-    <script src="dashboard.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>

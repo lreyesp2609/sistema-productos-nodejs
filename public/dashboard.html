@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Mi Sistema</h2>
+            </div>
+            
+            <div class="user-info">
+                <div class="user-avatar">
+                    <span id="userInitial">U</span>
+                </div>
+                <p class="username" id="username">Usuario</p>
+            </div>
+            
+            <nav class="menu">
+                <button class="menu-item active" id="btnDashboard">
+                    <span class="icon">📊</span>
+                    Dashboard
+                </button>
+                <button class="menu-item" id="btnAgregarProductos">
+                    <span class="icon">➕</span>
+                    Agregar Productos
+                </button>
+                <button class="menu-item" id="btnVerProductos">
+                    <span class="icon">📦</span>
+                    Productos
+                </button>
+                <button class="menu-item">
+                    <span class="icon">👥</span>
+                    Usuarios
+                </button>
+                <button class="menu-item">
+                    <span class="icon">⚙️</span>
+                    Configuración
+                </button>
+            </nav>
+            
+            <button class="logout-btn" id="btnLogout">
+                <span class="icon">🚪</span>
+                Cerrar Sesión
+            </button>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <h1 id="pageTitle">Bienvenido al Dashboard</h1>
+                <div class="top-bar-right">
+                    <span class="date" id="currentDate"></span>
+                </div>
+            </header>
+            
+            <!-- Vista Dashboard -->
+            <div class="content" id="dashboardView">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">📦</div>
+                        <div class="stat-info">
+                            <h3>Total Productos</h3>
+                            <p class="stat-number" id="totalProductos">0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon green">✅</div>
+                        <div class="stat-info">
+                            <h3>Activos</h3>
+                            <p class="stat-number" id="productosActivos">0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon orange">⏳</div>
+                        <div class="stat-info">
+                            <h3>Inactivos</h3>
+                            <p class="stat-number" id="productosInactivos">0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon purple">📊</div>
+                        <div class="stat-info">
+                            <h3>Cantidad Total</h3>
+                            <p class="stat-number" id="cantidadTotal">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="welcome-message">
+                    <h2>¡Hola, <span id="welcomeUser"></span>!</h2>
+                    <p>Este es tu panel de control. Aquí podrás gestionar tus productos y mucho más.</p>
+                </div>
+            </div>
+
+            <!-- Vista Agregar Producto -->
+            <div class="content" id="agregarProductoView" style="display: none;">
+                <div class="form-container">
+                    <h2>Agregar Nuevo Producto</h2>
+                    <form id="formAgregarProducto">
+                        <div class="form-group">
+                            <label for="nombreProducto">Nombre del Producto</label>
+                            <input 
+                                type="text" 
+                                id="nombreProducto" 
+                                name="nombreProducto" 
+                                placeholder="Ej: Laptop Dell"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cantidadProducto">Cantidad</label>
+                            <input 
+                                type="number" 
+                                id="cantidadProducto" 
+                                name="cantidadProducto" 
+                                min="0"
+                                placeholder="Ej: 10"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input 
+                                    type="checkbox" 
+                                    id="activoProducto" 
+                                    name="activoProducto"
+                                    checked
+                                >
+                                <span>Producto Activo</span>
+                            </label>
+                            <small>Desmarca si el producto no está disponible</small>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                <span class="icon">💾</span>
+                                Guardar Producto
+                            </button>
+                            <button type="button" class="btn-secondary" id="btnCancelar">
+                                <span class="icon">❌</span>
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Vista Ver Productos -->
+            <div class="content" id="verProductosView" style="display: none;">
+                <div class="productos-container">
+                    <div class="productos-header">
+                        <h2>Mis Productos</h2>
+                        <button class="btn-refresh" id="btnRefrescar">
+                            <span class="icon">🔄</span>
+                            Actualizar
+                        </button>
+                    </div>
+                    <div id="listaProductos" class="productos-lista">
+                        <!-- Los productos se cargarán aquí dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="dashboard.js"></script>
+</body>
+</html>

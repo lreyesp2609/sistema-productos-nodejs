@@ -3,6 +3,13 @@ node_modules/
 
 # Variables de entorno
 .env
+.env.local
+
+# Elastic Beanstalk
+.elasticbeanstalk/
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
 
 # Archivos de sistema
 .DS_Store
@@ -11,7 +18,3 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
-
-# Archivos temporales
-*.tmp
-*.temp

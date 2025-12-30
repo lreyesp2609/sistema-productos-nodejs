@@ -148,22 +148,9 @@
             margin-bottom: 8px;
         }
 
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #999;
-            font-size: 18px;
-        }
-
         input {
             width: 100%;
-            padding: 14px 16px 14px 45px;
+            padding: 14px 16px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             font-size: 15px;
@@ -179,57 +166,6 @@
             box-shadow: 0 0 0 4px rgba(42, 82, 152, 0.1);
         }
 
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #999;
-            font-size: 18px;
-            user-select: none;
-        }
-
-        .options-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: auto;
-            padding: 0;
-            margin: 0;
-            cursor: pointer;
-        }
-
-        .checkbox-group label {
-            margin: 0;
-            font-weight: 400;
-            color: #555;
-            cursor: pointer;
-        }
-
-        .forgot-password {
-            color: #2a5298;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .forgot-password:hover {
-            color: #1e3c72;
-            text-decoration: underline;
-        }
-
         button {
             width: 100%;
             padding: 15px;
@@ -243,7 +179,6 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 20px;
         }
 
         button:hover {
@@ -255,86 +190,6 @@
             transform: translateY(0);
         }
 
-        .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 25px 0;
-            color: #999;
-            font-size: 13px;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .divider span {
-            padding: 0 15px;
-        }
-
-        .social-login {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            background: white;
-            color: #555;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .social-btn:hover {
-            border-color: #2a5298;
-            background: #f8f9fa;
-            transform: translateY(-2px);
-        }
-
-        .register-link {
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .register-link a {
-            color: #2a5298;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .register-link a:hover {
-            color: #1e3c72;
-            text-decoration: underline;
-        }
-
-        .security-badge {
-            text-align: center;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
-            color: #999;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
         @media (max-width: 480px) {
             .login-box {
                 padding: 35px 25px;
@@ -342,10 +197,6 @@
 
             h1 {
                 font-size: 24px;
-            }
-
-            .social-login {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -361,80 +212,25 @@
         <div class="login-box">
             <div class="logo">
                 <div class="logo-circle"></div>
-                <h1>Bienvenido</h1>
-                <p class="subtitle">Inicia sesión en tu cuenta</p>
+                <h1>Iniciar Sesión</h1>
             </div>
             
             <form id="loginForm">
                 <div class="input-group">
-                    <label for="usuario">Usuario o Correo Electrónico</label>
-                    <div class="input-wrapper">
-                        <span class="input-icon">👤</span>
-                        <input type="text" id="usuario" name="usuario" placeholder="usuario@ejemplo.com" required>
-                    </div>
+                    <label for="usuario">Usuario</label>
+                    <input type="text" id="usuario" name="usuario" required>
                 </div>
                 
                 <div class="input-group">
                     <label for="password">Contraseña</label>
-                    <div class="input-wrapper">
-                        <span class="input-icon">🔒</span>
-                        <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
-                        <span class="password-toggle" onclick="togglePassword()">👁️</span>
-                    </div>
+                    <input type="password" id="password" name="password" required>
                 </div>
                 
-                <div class="options-row">
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="remember" name="remember">
-                        <label for="remember">Recordarme</label>
-                    </div>
-                    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-                </div>
-                
-                <button type="submit">Iniciar Sesión</button>
-                
-                <div class="divider">
-                    <span>O continúa con</span>
-                </div>
-                
-                <div class="social-login">
-                    <button type="button" class="social-btn" onclick="alert('Login con Google')">
-                        <span>G</span> Google
-                    </button>
-                    <button type="button" class="social-btn" onclick="alert('Login con Microsoft')">
-                        <span>Ⓜ️</span> Microsoft
-                    </button>
-                </div>
-                
-                <div class="register-link">
-                    ¿No tienes una cuenta? <a href="#">Regístrate aquí</a>
-                </div>
-                
-                <div class="security-badge">
-                    🛡️ Conexión segura y encriptada
-                </div>
+                <button type="submit">Entrar</button>
             </form>
         </div>
     </div>
     
-    <script>
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggle = document.querySelector('.password-toggle');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggle.textContent = '🙈';
-            } else {
-                passwordInput.type = 'password';
-                toggle.textContent = '👁️';
-            }
-        }
-
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Formulario enviado - Conecta tu lógica de autenticación aquí');
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

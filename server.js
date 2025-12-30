@@ -13,7 +13,7 @@ const {
 require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(express.static('public'));
@@ -226,7 +226,7 @@ app.delete('/api/productos/:id/:usuarioId', async (req, res) => {
 // ==================== INICIAR SERVIDOR ====================
 
 app.listen(PORT, async () => {
-    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
     console.log('🔌 Probando conexión a la base de datos...');
     await testConnection();
     console.log('');
